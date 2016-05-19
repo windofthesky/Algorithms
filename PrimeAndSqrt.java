@@ -1,3 +1,7 @@
+/*
+ * None Rights Reserve. Welcome to use.
+ * >_< 
+ */
 package algorithms;
 
 public class PrimeAndSqrt 
