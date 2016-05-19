@@ -228,6 +228,7 @@ public class BinarySearch
 	//Test the BinarySearch function.
 	public static void main(String[] args) throws IOException 
 	{
+		//Test data.
 		int[] arraysort = {1,2,3,4,5,6,7,8,9,10};
 		long[] arraysort_long = {1,2,3,4,5,6,7,8,9,10};
 		float[] arraysort_float = {1.0f,2.0f,3.0f,4.0f,5.0f,6.0f,7.0f,8.0f,9.0f,10.0f};
