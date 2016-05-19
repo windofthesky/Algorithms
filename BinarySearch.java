@@ -238,6 +238,7 @@ public class BinarySearch
 		float key_float = 9.0f;
 		double key_double = 9.0;
 		
+		//Test functions.
 		System.out.println("The key is :"+ key+ " and the index is : " + BiSearch(key, arraysort));
 		System.out.println("The key is :"+ key+ " and the index is : " + BiSearch(key_long, arraysort_long));
 		System.out.println("The key is :"+ key+ " and the index is : " + BiSearch(key_float, arraysort_float));
