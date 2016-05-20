@@ -23,6 +23,7 @@ public class FixedCapacityStack<Item>
 			temp[i] = this.m_array[i];
 		}
 		this.m_cap = resize;
+		this.m_array = temp;
 	}
 	
 	public boolean isFull()
