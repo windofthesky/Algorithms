@@ -14,6 +14,17 @@ public class FixedCapacityStack<Item>
 		this.m_cap = capacity;
 	}
 	
+	private void resize(int resize)
+	{
+		Item[] temp = (Item[]) new Object[resize];
+		
+		for(int i = 0; i < this.m_size; i++)
+		{
+			temp[i] = this.m_array[i];
+		}
+		this.m_cap = resize;
+	}
+	
 	public boolean isFull()
 	{
 		return (m_size == m_cap);
@@ -34,16 +45,16 @@ public class FixedCapacityStack<Item>
 		return this.m_array[--m_size];
 	}
 	
-	public boolean push(Item item)
+	public void push(Item item)
 	{
 		if(!isFull())
 		{
 			this.m_array[m_size++] = item;
-			return true;
 		}
 		else
 		{
-			return false;
+			this.resize(this.m_cap*2);
+			this.m_array[m_size++] = item;
 		}
 	}
 	
