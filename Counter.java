@@ -7,6 +7,9 @@ public class Counter
 {
 	private String m_name;
 	
+	/*
+	 *The static count value, which will be shared by all threads.
+	 */
 	private static long count;
 	
 	private String getCounterName()
@@ -21,12 +24,13 @@ public class Counter
 	
 	public void increase()
 	{
-		if(Counter.count <= Long.MAX_VALUE)
+		if(Counter.count < Long.MAX_VALUE)
 		{
 			Counter.count+=1;
 		}
 		else
 		{
+			//if the count is too big, reset it to 0. 
 			Counter.count = 0;
 		}
 	}
@@ -43,14 +47,15 @@ public class Counter
 
 	public static void main(String[] args) throws InterruptedException 
 	{
-		
 		int threadNum = 20;
 		for (int i = 0; i < threadNum; i++) //open threadNum threads.
 		{
             Thread t = new WorkerThread();
             t.start();
         }
-        while (true)//wait all the threads end 
+        
+        //wait all the threads end 
+        while (true)
 		{
             if (!WorkerThread.hasThreadRunning()) 
 			{
@@ -68,8 +73,7 @@ public class Counter
  
         @Override
         public void run() 
-		{
-        	
+	    {
         	for(int j = 0; j<10; j++)
         	{
         		test.increase();
