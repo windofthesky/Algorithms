@@ -43,7 +43,15 @@ public class FixedCapacityStack<Item>
 	
 	public Item pop()
 	{
-		return this.m_array[--m_size];
+		Item returnItem = this.m_array[--this.m_size];
+		this.m_array[this.m_size] = null;
+		
+		if((this.m_size == this.m_array.length/4) && (this.m_size > 0))
+		{
+			this.resize(this.m_array.length/2);
+		}
+		
+		return returnItem;
 	}
 	
 	public void push(Item item)
