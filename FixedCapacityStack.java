@@ -1,6 +1,8 @@
 package algorithms;
 
-public class FixedCapacityStack<Item> 
+import java.util.Iterator;
+
+public class FixedCapacityStack<Item> implements Iterable<Item>
 {
 	private Item[] m_array;
 	private int m_size;
@@ -67,6 +69,31 @@ public class FixedCapacityStack<Item>
 		}
 	}
 	
+	public Iterator<Item> iterator()
+	{
+		return new ReverseArrayIterator();
+	}
+	
+	private class ReverseArrayIterator implements Iterator<Item>
+	{
+		private int i = m_size;
+		
+		public boolean hasNext()
+		{
+			return i>0;
+		}
+		
+		public Item next()
+		{
+			return m_array[--i];
+		}
+		
+		public void remove()
+		{
+			throw new UnsupportedOperationException();
+		}
+	}
+	
 
 	public static void main(String[] args) 
 	{
@@ -75,6 +102,12 @@ public class FixedCapacityStack<Item>
 	    s_test.push("def");
 	    s_test.push("hig");
 	    s_test.push("khl");
+	    
+	    for(String a : s_test)
+	    {
+	    	System.out.println("Iterator Operation Item is :" + a);
+	    }
+	    
 	    for(int i = s_test.m_size; i>0; i--)
 	    {
 	    	System.out.println("Item is :" + s_test.pop());
