@@ -4,12 +4,19 @@ public class FixedCapacityStack<Item>
 {
 	private Item[] m_array;
 	private int m_size;
+	private int m_cap;
 	
 	@SuppressWarnings("unchecked")
 	public FixedCapacityStack(int capacity)
 	{
 		//Generic type array is not allowed in Java. 
 		this.m_array = (Item[]) new Object[capacity];
+		this.m_cap = capacity;
+	}
+	
+	public boolean isFull()
+	{
+		return (m_size == m_cap);
 	}
 	
 	public boolean isEmpty()
@@ -27,9 +34,17 @@ public class FixedCapacityStack<Item>
 		return this.m_array[--m_size];
 	}
 	
-	public void push(Item item)
+	public boolean push(Item item)
 	{
-		this.m_array[m_size++] = item;
+		if(!isFull())
+		{
+			this.m_array[m_size++] = item;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 
