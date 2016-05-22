@@ -1,9 +1,20 @@
-public static int gcd(int p, int q)
+package algorithms;
+
+public class Gcd
 {
-    if(q == 0)
-        return p;
+    public static int gcd(int p, int q)
+    {
+        if(q == 0)
+            return p;
         
-    int r = p % q;
+        int r = p % q;
     
-    return gcd(q, r);
+        return gcd(q, r);
+    }
+    
+    public static void main(String[] args) 
+    {
+    	int test = gcd(15, 6);
+    	System.out.println("The answer is: " + test);
+    }
 }
