@@ -43,7 +43,10 @@ public class SortExample
 	
 	public static void main(String[] args) 
 	{
+	    String[] a = {"asd", "hjk", "iou", "lkj"};
 		
+		sort(a);
+		assert isSorted(a);
+		show(a);
 	}
-
 }
