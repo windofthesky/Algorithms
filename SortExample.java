@@ -2,9 +2,68 @@ package algorithms;
 
 public class SortExample 
 {
-	public static void sort(Comparable[] a)
+	public enum SORT_TYPE
 	{
-		//Here input the sort methods.
+		SELECTION(0),
+		INSERTION(1);
+		
+		private int type;
+		
+		SORT_TYPE(int n)
+		{
+			this.type = n;
+		}
+		
+		private int getType()
+		{
+			return this.type;
+		}
+
+	}
+	public static void sort(Comparable[] a, SORT_TYPE type)
+	{
+		switch(type)
+		{
+			case SELECTION:
+				selection(a);
+				break;
+			case INSERTION:
+				insertion(a);
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public static void selection(Comparable[] a)
+	{
+		int length = a.length;
+		
+		for(int i = 0; i < length; i++)
+		{
+			int min = i;
+			for(int j = i+1; j < length; j++)
+			{
+				if(less(a[j], a[i]))
+				{
+					min = j;
+				}
+			}
+			exchange(a, i, min);
+		}
+	}
+	
+	public static void insertion(Comparable[] a)
+	{
+		int length = a.length;
+		
+		for(int i = 1; i<length; i++)
+		{
+			for(int j = i; j > 0 && less(a[j], a[j-1]); j--)
+			{
+				exchange(a, j, j-1);
+			}
+		}
 	}
 	
 	private static boolean less(Comparable v, Comparable w)
@@ -40,13 +99,25 @@ public class SortExample
 		return true;
 	}
 	
-	
 	public static void main(String[] args) 
 	{
-	    String[] a = {"asd", "hjk", "iou", "lkj"};
+		String[] a = {"asd", "hjk", "hau", "lkj"};
+		Integer[] b = {3,2,1,5,6,8,7};
 		
-		sort(a);
+		sort(a, SORT_TYPE.SELECTION);
 		assert isSorted(a);
 		show(a);
+		
+		sort(a, SORT_TYPE.INSERTION);
+		assert isSorted(a);
+		show(a);
+		
+		sort(b, SORT_TYPE.SELECTION);
+		assert isSorted(b);
+		show(b);
+		
+		sort(b, SORT_TYPE.INSERTION);
+		assert isSorted(b);
+		show(b);
 	}
 }
