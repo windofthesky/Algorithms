@@ -2,12 +2,14 @@ package algorithms;
 
 public class SortExample 
 {	
+	//-----------Enum of Sort Type---------------------
 	public enum SORT_TYPE
 	{
 		SELECTION(0),
 		INSERTION(1),
 		SHELL(2),
-		MERGE(3);
+		MERGE(3),
+		MERGE_BU(4);
 		
 		private int type;
 		
@@ -23,6 +25,7 @@ public class SortExample
 
 	}
 	
+	//----------------Organizer Function-----------------
 	public static void sort(Comparable[] a, SORT_TYPE type)
 	{
 		switch(type)
@@ -39,11 +42,14 @@ public class SortExample
 			case MERGE:
 				merge_sort(a);
 				break;
+			case MERGE_BU:
+				merge_sort_buttomup(a);
 			default:
 				break;
 		}
 	}
 	
+	//-------------------------Selection Sort-------------------
 	public static void selection(Comparable[] a)
 	{
 		int length = a.length;
@@ -62,6 +68,7 @@ public class SortExample
 		}
 	}
 	
+	//------------------Insertion Sort-------------------
 	public static void insertion(Comparable[] a)
 	{
 		int length = a.length;
@@ -75,6 +82,7 @@ public class SortExample
 		}
 	}
 	
+	//------------Shell Sort-----------------------------
 	public static void shell(Comparable[] a, int seg_length)
 	{
 		int length = a.length;
@@ -98,10 +106,28 @@ public class SortExample
 		}
 	}
 	
+	//------------------Merge Sort---------------------------
     public static void merge_sort(Comparable[] a) 
     {
         Comparable[] aux = new Comparable[a.length];
         inner_sort(a, aux, 0, a.length-1);
+    }
+    
+    public static void merge_sort_buttomup(Comparable[] a)
+    {
+    	int length = a.length;
+    	Comparable[] aux = new Comparable[length];
+    	
+    	for(int n = 1; n < length; n+=n)
+    	{
+    		for(int i = 0; i<length-n; i+=(n+n))
+    		{
+    			int lo = i;
+    			int m = i+n-1;
+    			int hi = Math.min(i+n+n-1, length-1);
+    			merge(a, aux, lo, m, hi);
+    		}
+    	}
     }
 	
     private static void inner_sort(Comparable[] a, Comparable[] aux, int lo, int hi) 
@@ -112,6 +138,7 @@ public class SortExample
         inner_sort(a, aux, mid + 1, hi);
         merge(a, aux, lo, mid, hi);
     }
+    
 	
     private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) 
     {
@@ -142,6 +169,7 @@ public class SortExample
         }
     }
 	
+    //----------------Assistant Function----------------
 	private static boolean less(Comparable v, Comparable w)
 	{
 		return v.compareTo(w) < 0;
@@ -175,11 +203,13 @@ public class SortExample
 		return true;
 	}
 	
+	//------------Test Function--------------
 	public static void main(String[] args) 
 	{
 		String[] a = {"asd", "hjk", "hau", "lkj"};
 		Integer[] b = {3,2,1,5,6,8,7};
 		
+		//----------------------String Array----------------------
 		sort(a, SORT_TYPE.SELECTION);
 		assert isSorted(a);
 		show(a);
@@ -196,6 +226,10 @@ public class SortExample
 		assert isSorted(a);
 		show(a);
 		
+		sort(a, SORT_TYPE.MERGE_BU);
+		assert isSorted(a);
+		show(a);
+		//---------------Integer Array---------------------
 		sort(b, SORT_TYPE.SELECTION);
 		assert isSorted(b);
 		show(b);
@@ -209,6 +243,10 @@ public class SortExample
 		show(b);
 		
 		sort(b, SORT_TYPE.MERGE);
+		assert isSorted(b);
+		show(b);
+		
+		sort(b, SORT_TYPE.MERGE_BU);
 		assert isSorted(b);
 		show(b);
 	}
