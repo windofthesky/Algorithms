@@ -9,7 +9,8 @@ public class SortExample
 		INSERTION(1),
 		SHELL(2),
 		MERGE(3),
-		MERGE_BU(4);
+		MERGE_BU(4),
+		QSORT(5);
 		
 		private int type;
 		
@@ -44,6 +45,8 @@ public class SortExample
 				break;
 			case MERGE_BU:
 				merge_sort_buttomup(a);
+			case QSORT:
+				qsort(a);
 			default:
 				break;
 		}
@@ -168,6 +171,59 @@ public class SortExample
             }
         }
     }
+    
+    //---------------Quick Sort--------------------------
+    private static int partition(Comparable[] a, int lo, int hi)
+    {
+    	int i = lo;
+    	int j = hi+1;
+    	
+    	Comparable v = a[lo];
+    	
+    	while(true)
+    	{
+    		while(less(a[++i], v))
+    		{
+    			if(i == hi)
+    			{
+    				break;
+    			}
+    		}
+    		
+    		while(less(v, a[--j]))
+    		{
+    			if(j == lo)
+    			{
+    				break;
+    			}
+    		}
+    		
+    		if(i>=j)
+    		{
+    			break;
+    		}
+    		
+    		exchange(a, i, j);
+    	}
+    	exchange(a, lo, j);
+    	return j;
+    }
+    
+    private static void inner_qsort(Comparable[] a, int lo, int hi)
+    {
+    	if(hi <= lo)
+    	{
+    		return;
+    	}
+    	int j = partition(a, lo, hi);
+    	inner_qsort(a, lo, j-1);
+    	inner_qsort(a, j+1, hi);
+    }
+    
+    public static void qsort(Comparable[] a)
+    {
+    	inner_qsort(a, 0, a.length-1);
+    }
 	
     //----------------Assistant Function----------------
 	private static boolean less(Comparable v, Comparable w)
@@ -226,9 +282,10 @@ public class SortExample
 		assert isSorted(a);
 		show(a);
 		
-		sort(a, SORT_TYPE.MERGE_BU);
+		sort(a, SORT_TYPE.QSORT);
 		assert isSorted(a);
 		show(a);
+		
 		//---------------Integer Array---------------------
 		sort(b, SORT_TYPE.SELECTION);
 		assert isSorted(b);
@@ -247,6 +304,10 @@ public class SortExample
 		show(b);
 		
 		sort(b, SORT_TYPE.MERGE_BU);
+		assert isSorted(b);
+		show(b);
+		
+		sort(b, SORT_TYPE.QSORT);
 		assert isSorted(b);
 		show(b);
 	}
