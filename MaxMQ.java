@@ -41,17 +41,49 @@ public class MaxMQ<Key extends Comparable<Key>>
 			{
 				j++;
 			}
-			
+		
 			if(!less(k, j))
 			{
 				break;
 			}
-			
+		
 			exchange(k, j);
 			k = j;
 		}
 	}
 	
+	public MaxMQ(int maxN)
+	{
+		pq = (Key[]) new Comparable[maxN + 1];
+	}
+	
+	public boolean isEmpty()
+	{
+		return N == 0;
+	}
+	
+	public int size()
+	{
+		return N;
+	}
+	
+	public void insert(Key v)
+	{
+		pq[++N] = v;
+		swim(N);
+	}
+	
+	public Key delMax()
+	{
+		Key max = pq[1];
+		exchange(1, N--);
+		pq[N+1] = null;
+		sink(1);
+		
+		return max;
+	}
+	
+	//-----Test Code----------------------
 	public static void main(String[] args) 
 	{
 
