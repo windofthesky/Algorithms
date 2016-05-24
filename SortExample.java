@@ -1,12 +1,13 @@
 package algorithms;
 
 public class SortExample 
-{
+{	
 	public enum SORT_TYPE
 	{
 		SELECTION(0),
 		INSERTION(1),
-		SHELL(2);
+		SHELL(2),
+		MERGE(3);
 		
 		private int type;
 		
@@ -21,6 +22,7 @@ public class SortExample
 		}
 
 	}
+	
 	public static void sort(Comparable[] a, SORT_TYPE type)
 	{
 		switch(type)
@@ -33,6 +35,9 @@ public class SortExample
 				break;
 			case SHELL:
 				shell(a,3);
+				break;
+			case MERGE:
+				merge_sort(a);
 				break;
 			default:
 				break;
@@ -93,6 +98,50 @@ public class SortExample
 		}
 	}
 	
+    public static void merge_sort(Comparable[] a) 
+    {
+        Comparable[] aux = new Comparable[a.length];
+        inner_sort(a, aux, 0, a.length-1);
+    }
+	
+    private static void inner_sort(Comparable[] a, Comparable[] aux, int lo, int hi) 
+    {
+        if (hi <= lo) return;
+        int mid = lo + (hi - lo) / 2;
+        inner_sort(a, aux, lo, mid);
+        inner_sort(a, aux, mid + 1, hi);
+        merge(a, aux, lo, mid, hi);
+    }
+	
+    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) 
+    {
+        for (int k = lo; k <= hi; k++) {
+            aux[k] = a[k]; 
+        }
+
+        // merge back to a[]
+        int i = lo, j = mid+1;
+        for (int k = lo; k <= hi; k++) 
+        {
+            if(i > mid)     
+            {
+            	a[k] = aux[j++];
+            }
+            else if (j > hi)               
+            {
+            	a[k] = aux[i++];
+            }
+            else if (less(aux[j], aux[i])) 
+            {
+            	a[k] = aux[j++];
+            }
+            else                           
+            {
+            	a[k] = aux[i++];
+            }
+        }
+    }
+	
 	private static boolean less(Comparable v, Comparable w)
 	{
 		return v.compareTo(w) < 0;
@@ -143,6 +192,10 @@ public class SortExample
 		assert isSorted(a);
 		show(a);
 		
+		sort(a, SORT_TYPE.MERGE);
+		assert isSorted(a);
+		show(a);
+		
 		sort(b, SORT_TYPE.SELECTION);
 		assert isSorted(b);
 		show(b);
@@ -152,6 +205,10 @@ public class SortExample
 		show(b);
 		
 		sort(b, SORT_TYPE.SHELL);
+		assert isSorted(b);
+		show(b);
+		
+		sort(b, SORT_TYPE.MERGE);
 		assert isSorted(b);
 		show(b);
 	}
