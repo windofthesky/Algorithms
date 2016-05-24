@@ -10,7 +10,8 @@ public class SortExample
 		SHELL(2),
 		MERGE(3),
 		MERGE_BU(4),
-		QSORT(5);
+		QSORT(5),
+		QSORT_3WAY(6);
 		
 		private int type;
 		
@@ -45,8 +46,13 @@ public class SortExample
 				break;
 			case MERGE_BU:
 				merge_sort_buttomup(a);
+				break;
 			case QSORT:
 				qsort(a);
+				break;
+			case QSORT_3WAY:
+				qsort_3way(a);
+				break;
 			default:
 				break;
 		}
@@ -220,10 +226,50 @@ public class SortExample
     	inner_qsort(a, j+1, hi);
     }
     
+    /*
+     * 3 way means: small[] + equal[] +bigger[].
+     */
+    private static void inner_sort3way(Comparable[] a, int lo, int hi)
+    {
+    	if(hi <= lo)
+    	{
+    		return;
+    	}
+    	int lt = lo;
+    	int i = lo+1; 
+    	int gt = hi;
+    	
+    	Comparable v = a[lo];
+    	while(i <= gt)
+    	{
+    		int cmp = a[i].compareTo(v);
+    		if(cmp < 0)
+    		{
+    			exchange(a, lt++, i++);
+    		}
+    		else if(cmp > 0)
+    		{
+    			exchange(a, i, gt--);
+    		}
+    		else
+    		{
+    			i++;
+    		}
+    	}
+    	inner_sort3way(a, lo, lt-1);
+    	inner_sort3way(a, gt+1, hi);
+    }
+    
     public static void qsort(Comparable[] a)
     {
     	inner_qsort(a, 0, a.length-1);
     }
+    
+    public static void qsort_3way(Comparable[] a)
+    {
+    	inner_sort3way(a, 0, a.length-1);
+    }
+    
 	
     //----------------Assistant Function----------------
 	private static boolean less(Comparable v, Comparable w)
@@ -286,6 +332,10 @@ public class SortExample
 		assert isSorted(a);
 		show(a);
 		
+		sort(a, SORT_TYPE.QSORT_3WAY);
+		assert isSorted(a);
+		show(a);
+		
 		//---------------Integer Array---------------------
 		sort(b, SORT_TYPE.SELECTION);
 		assert isSorted(b);
@@ -308,6 +358,10 @@ public class SortExample
 		show(b);
 		
 		sort(b, SORT_TYPE.QSORT);
+		assert isSorted(b);
+		show(b);
+		
+		sort(b, SORT_TYPE.QSORT_3WAY);
 		assert isSorted(b);
 		show(b);
 	}
