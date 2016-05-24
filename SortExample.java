@@ -102,7 +102,7 @@ public class SortExample
 					exchange(a, j, j-h);
 				}
 			}
-			h = h/3;
+			h = h/seg_length;
 		}
 	}
 	
