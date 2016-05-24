@@ -5,7 +5,8 @@ public class SortExample
 	public enum SORT_TYPE
 	{
 		SELECTION(0),
-		INSERTION(1);
+		INSERTION(1),
+		SHELL(2);
 		
 		private int type;
 		
@@ -29,6 +30,9 @@ public class SortExample
 				break;
 			case INSERTION:
 				insertion(a);
+				break;
+			case SHELL:
+				shell(a,3);
 				break;
 			default:
 				break;
@@ -63,6 +67,29 @@ public class SortExample
 			{
 				exchange(a, j, j-1);
 			}
+		}
+	}
+	
+	public static void shell(Comparable[] a, int seg_length)
+	{
+		int length = a.length;
+		int h = 1;
+		
+		while(h < length/seg_length)
+		{
+			h = seg_length*h + 1;
+		}
+		
+		while(h >= 1)
+		{
+			for(int i = h; i<length; i++)
+			{
+				for(int j = i; j>=h && less(a[j], a[j-h]); j-=h)
+				{
+					exchange(a, j, j-h);
+				}
+			}
+			h = h/3;
 		}
 	}
 	
@@ -112,11 +139,19 @@ public class SortExample
 		assert isSorted(a);
 		show(a);
 		
+		sort(a, SORT_TYPE.SHELL);
+		assert isSorted(a);
+		show(a);
+		
 		sort(b, SORT_TYPE.SELECTION);
 		assert isSorted(b);
 		show(b);
 		
 		sort(b, SORT_TYPE.INSERTION);
+		assert isSorted(b);
+		show(b);
+		
+		sort(b, SORT_TYPE.SHELL);
 		assert isSorted(b);
 		show(b);
 	}
