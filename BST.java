@@ -24,7 +24,6 @@ public class BST<Key extends Comparable<Key>, Value>
 	
 	public BST()
 	{
-		
 	}
 	
 	public boolean isEmpty()
@@ -516,11 +515,14 @@ public class BST<Key extends Comparable<Key>, Value>
         Queue<Key> keys = new Queue<Key>();
         Queue<Node> queue = new Queue<Node>();
         queue.enqueue(root);
+        
         while (!queue.isEmpty()) 
         {
             Node x = queue.dequeue();
             if (x == null) 
+            {
             	continue;
+            }
             keys.enqueue(x.key);
             queue.enqueue(x.left);
             queue.enqueue(x.right);
@@ -601,7 +603,7 @@ public class BST<Key extends Comparable<Key>, Value>
         for (String s : st.levelOrder())
             System.out.println(s + " " + st.get(s));
 
-        System.out.println();
+        System.out.println("---------------------------------");
 
         for (String s : st.keys())
             System.out.println(s + " " + st.get(s));
