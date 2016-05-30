@@ -44,7 +44,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		}
 		else
 		{
-			return x.N;
+			return (x.N);
 		}
 	}
 	
@@ -132,6 +132,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			throw new NoSuchElementException("Exception: Symbol table underflow!");
 		}
+		
 		root = deleteMin(root);
 		assert check();
 	}
@@ -205,15 +206,18 @@ public class BST<Key extends Comparable<Key>, Value>
 			{
 				return x.left;
 			}
+			
 			if(x.left == null)
 			{
 				return x.right;
 			}
+			
 			Node t = x;
 			x = min(t.right);
 			x.right = deleteMin(t.right);
 			x.left = t.left;
 		}
+		
 		x.N = size(x.left) + size(x.right) + 1;
 		return x;
 	}
@@ -224,6 +228,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			throw new NoSuchElementException("Exception: called min() with empty sybol table!");
 		}
+		
 		return min(root).key;
 	}
 	
@@ -245,6 +250,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			throw new NoSuchElementException("Exception: called max() with empty symbol table!");
 		}
+		
 		return max(root).key;
 	}
 	
@@ -266,12 +272,14 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			throw new NullPointerException("Exception: argument to floor() is null!");
 		}
+		
 		if(isEmpty())
 		{
 			throw new NoSuchElementException("Exception: called floor() with empty symbol table!");
 		}
 		
 		Node x = floor(root, k);
+		
 		if(x == null)
 		{
 			return null;
@@ -301,6 +309,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		}
 		
 		Node t = floor(x.right,k);
+		
 		if(t != null)
 		{
 			return t;
@@ -317,12 +326,14 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			throw new NullPointerException("Exception: argument to ceiling() is null!");
 		}
+		
 		if(isEmpty())
 		{
 			throw new NoSuchElementException("Exception: called ceiling() with empty symbol table!");
 		}
 		
 		Node x = ceiling(root, k);
+		
 		if(x == null)
 		{
 			return null;
@@ -349,6 +360,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		if(cmp < 0)
 		{
 			Node t = ceiling(x.left, k);
+			
 			if(t != null)
 			{
 				return t;
@@ -358,6 +370,7 @@ public class BST<Key extends Comparable<Key>, Value>
 				return x;
 			}
 		}
+		
 		return ceiling(x.right, k);	
 	}
 	
@@ -380,6 +393,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		}
 		
 		int t = size(x.left);
+		
 		if(t > k) 
 		{
 			return select(x.left, k);
@@ -400,6 +414,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			throw new NullPointerException("Exception: argument to rank() is null!");
 		}
+		
 		return rank(k, root);
 	}
 	
@@ -411,6 +426,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		}
 		
 		int cmp = k.compareTo(x.key);
+		
 		if(cmp < 0)
 		{
 			return rank(k, x.left);
@@ -436,6 +452,7 @@ public class BST<Key extends Comparable<Key>, Value>
 	    {
 	    	throw new NullPointerException("Exception: first argument to keys() is null!");
 	    }
+	    
 	    if(hi == null)
 	    {
 	    	throw new NullPointerException("Exception: second argument to keys() is null!");
@@ -460,10 +477,12 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			keys(x.left, queue, lo, hi);
 		}
+		
 		if(cmplo <= 0 && cmphi >= 0)
 		{
 			queue.enqueue(x.key);
 		}
+		
 		if(cmphi > 0)
 		{
 			keys(x.right, queue, lo, hi);
@@ -476,6 +495,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			throw new NullPointerException("Exception: first argument to size() is null!");
 		}
+		
 		if(hi == null)
 		{
 			throw new NullPointerException("Exception: second argument to size() is null!");
@@ -485,6 +505,7 @@ public class BST<Key extends Comparable<Key>, Value>
 		{
 			return 0;
 		}
+		
 		if(contains(hi))
 		{
 			return rank(hi) - rank(lo) + 1;
@@ -527,6 +548,7 @@ public class BST<Key extends Comparable<Key>, Value>
             queue.enqueue(x.left);
             queue.enqueue(x.right);
         }
+        
         return keys;
     }
 
@@ -534,10 +556,13 @@ public class BST<Key extends Comparable<Key>, Value>
     {
         if (!isBST())            
         	System.out.println("Not in symmetric order");
-        if (!isSizeConsistent()) 
+        	
+        if (!isSizeConsistent())
         	System.out.println("Subtree counts not consistent");
+        	
         if (!isRankConsistent()) 
         	System.out.println("Ranks not consistent");
+        	
         return isBST() && isSizeConsistent() && isRankConsistent();
     }
 
@@ -550,10 +575,13 @@ public class BST<Key extends Comparable<Key>, Value>
     {
         if (x == null) 
         	return true;
+        	
         if (min != null && x.key.compareTo(min) <= 0) 
         	return false;
+        	
         if (max != null && x.key.compareTo(max) >= 0) 
         	return false;
+        	
         return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
     } 
 
@@ -566,8 +594,10 @@ public class BST<Key extends Comparable<Key>, Value>
     {
         if (x == null) 
         	return true;
+        	
         if (x.N != size(x.left) + size(x.right) + 1) 
         	return false;
+        	
         return isSizeConsistent(x.left) && isSizeConsistent(x.right);
     } 
 
@@ -578,11 +608,13 @@ public class BST<Key extends Comparable<Key>, Value>
         	if (i != rank(select(i))) 
         		return false;
         }
+        
         for (Key key : keys())
         {    
         	if (key.compareTo(select(rank(key))) != 0) 
         		return false;
         }
+        
         return true;
     }
 
