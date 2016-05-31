@@ -7,7 +7,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
 
     private static final boolean RED   = true;
     private static final boolean BLACK = false;
-
     private Node root;     // root of the BST
 
     // BST helper node data type
@@ -33,6 +32,5 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
      */
     public RedBlackBST() 
     {
-    	
     }
 }
